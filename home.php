@@ -1,16 +1,21 @@
-<?php
-    if (!empty($_POST)){
-        echo $$_POST["nome_cliente"];
-    }
-?>
-
-
 <html>
     <head>
         <style>
+            body{
+                margin: 20px;
+            }
+            .cadastrar{
+                color: white;
+                margin: 20px;
+                padding: 10px;
+                font-size: 16px;
+                background-color: green;
+                border: none;
+                border-radius: 8px;
+            }
             a {
                 cursor: pointer;
-                margin: 20px;
+                text-decoration: none;
             }
             div {
                 margin: 10px;
@@ -24,7 +29,7 @@
         </style>
     </head>
     <body>
-        <a href="./cadastrar.php">
+        <a href="./cadastrar.php" class="cadastrar">
             Cadastrar Cliente
         </a>
         <div>
@@ -33,18 +38,23 @@
                     <th>Nome</th>
                     <th>CPF</th>
                     <th>Email</th>
+                    <th>Edição</th>
                 </tr>
-                <tr>
-                    <?php
-                        foreach ($result as $array){
-                    ?>
+                <?php
+                    foreach ($result as $array){
+                ?>
+                    <tr>
                         <td><?php echo $array["nome_cliente"];?></td>
                         <td><?php echo $array["cpf"];?></td>
                         <td><?php echo $array["email"];?></td>
-                    <?php    
-                        }
-                    ?>
-                </tr>
+                        <td>
+                            <a href="./deletar.php">🗑</a>
+                            <a href="./index.php">🖊️</a>
+                        </td>
+                    </tr>
+                <?php    
+                    }
+                ?>
             </table>
         </div>
     </body>
