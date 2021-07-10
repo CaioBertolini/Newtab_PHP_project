@@ -24,7 +24,7 @@
                 width: 100%;
             }
             tr {
-                text-align: left;
+                text-align: center;
             }
         </style>
     </head>
@@ -38,7 +38,8 @@
                     <th>Nome</th>
                     <th>CPF</th>
                     <th>Email</th>
-                    <th>Edição</th>
+                    <th>Excluir</th>
+                    <th>Alterar</th>
                 </tr>
                 <?php
                     foreach ($result as $array){
@@ -47,10 +48,8 @@
                         <td><?php echo $array["nome_cliente"];?></td>
                         <td><?php echo $array["cpf"];?></td>
                         <td><?php echo $array["email"];?></td>
-                        <td>
-                            <a href="./deletar.php">🗑</a>
-                            <a href="./index.php">🖊️</a>
-                        </td>
+                        <td><a href="./index.php?id=<?php echo $array["id"];?>">🗑</a></td>
+                        <td><a href="./cadastrar.php?id=<?php echo $array["id"];?>">🖊️</a></td>
                     </tr>
                 <?php    
                     }

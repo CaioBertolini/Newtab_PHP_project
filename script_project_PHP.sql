@@ -8,7 +8,8 @@ create table cliente(
     nome_cliente varchar(255) not null,
     cpf bigint not null,
     email varchar(255) not null,
-    data_cliente datetime default CURRENT_TIMESTAMP
+    data_cliente datetime default CURRENT_TIMESTAMP,
+    data_delecao datetime,
 );
 
 CREATE UNIQUE INDEX cliente_id ON cliente(id);
@@ -22,7 +23,8 @@ create table produto (
     cod_barras varchar(50) not null,
     nome_produto varchar(255) not null,
     valor_produto float(12,2) not null,
-    data_cadastro datetime default current_timestamp
+    data_cadastro datetime default current_timestamp,
+    data_delecao datetime
 );
 
 CREATE UNIQUE INDEX produto_id ON produto(id);
@@ -46,3 +48,8 @@ CREATE UNIQUE INDEX pedido_num ON pedido(num_pedido);
 CREATE INDEX pedido_cliente ON pedido(id_cliente);
 CREATE INDEX pedido_produto ON pedido(id_produto);
 
+insert into cliente(nome_cliente, cpf, email) values ("Caio",43123435612,"caio@bol.com");
+
+select * from cliente;
+
+UPDATE cliente SET data_delecao=null WHERE id = 4;
