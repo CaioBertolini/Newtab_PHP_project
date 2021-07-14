@@ -36,7 +36,16 @@
         </style>
     </head>
     <body>
-        <form action="./index.php?id=<?php echo $_GET['id'];?>" method="POST" >
+        <form 
+            action="./index.php<?php
+                if (!empty($_GET)){
+                    echo "?page=cliente&id=".$_GET['id'];
+                } else {
+                    echo "?page=cliente";
+                }
+                ?>" 
+            method="POST" 
+        >
             <input name="nome_cliente" type="text" placeholder="nome" value="<?php echo $nomeCadastro;?>" required>
             <input name="cpf" type="number" placeholder="CPF" value="<?php echo $cpfCadastro;?>" required>
             <input name="email" type="email" placeholder="Email" value="<?php echo $emailCadastro;?>" required>
