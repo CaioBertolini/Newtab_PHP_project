@@ -18,10 +18,18 @@
                 border: none;
                 border-radius: 8px;
             }
+            span {
+                width: 100%;
+                margin-top: 100px;
+                position: absolute;
+                text-align: center;
+                font-size: 3em;
+            }
         </style>
     </head>
     <body>
         <div class="divMenu">
+            <a class="menuPrincipal" href="/">Home</a>
             <a class="menuPrincipal" href="/index.php?page=cliente">Clientes</a>
             <a class="menuPrincipal" href="/index.php?page=produto">Produtos</a>
             <a class="menuPrincipal" href="/">Pedidos</a>
@@ -30,7 +38,11 @@
 </html>
 
 <?php
-    if ($_GET["page"]=="cliente"){
+    if (empty($_GET)){
+?>
+    <span>Seja bem vindo à API de pedidos!</span>
+<?php
+    }else if ($_GET["page"]=="cliente"){
         include "./mysql.php";
         include "./home.php";
     } else if ($_GET["page"]=="produto"){

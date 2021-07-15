@@ -12,9 +12,9 @@
         } else if($_GET["page"]=="produto"){
             $sql_update = "UPDATE produto SET cod_barras=:cod_barras, nome_produto=:nome_produto, valor_produto=:valor_produto WHERE id = :id and data_delecao IS NULL;";
             $stmt = $conn->prepare($sql_update);
-            $stmt->bindParam(':cod_barras', $_POST["cod_barras"]);
-            $stmt->bindParam(':nome_produto', $_POST["nome_produto"]);
-            $stmt->bindParam(':valor_produto', $_POST["valor_produto"]);
+            $stmt->bindParam(':cod_barras', $_POST["nome_cliente"]);
+            $stmt->bindParam(':nome_produto', $_POST["cpf"]);
+            $stmt->bindParam(':valor_produto', $_POST["email"]);
         }
         $stmt->bindParam(':id', $_GET["id"]);
         $stmt->execute();
@@ -26,9 +26,9 @@
             $stmt->bindParam(':email', $_POST["email"]);
         } else if($_GET["page"]=="produto"){
             $stmt = $conn->prepare("INSERT INTO produto(cod_barras, nome_produto, valor_produto) VALUES (:cod_barras,:nome_produto,:valor_produto);");
-            $stmt->bindParam(':cod_barras', $_POST["cod_barras"]);
-            $stmt->bindParam(':nome_produto', $_POST["nome_produto"]);
-            $stmt->bindParam(':valor_produto', $_POST["valor_produto"]);
+            $stmt->bindParam(':cod_barras', $_POST["nome_cliente"]);
+            $stmt->bindParam(':nome_produto', $_POST["cpf"]);
+            $stmt->bindParam(':valor_produto', $_POST["email"]);
         }
         $stmt->execute();
     } else if (!empty($_GET["id"])){

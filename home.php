@@ -1,3 +1,12 @@
+<?php
+    if ($_GET["page"]=="cliente"){
+        $nomePagina = "cliente";
+    } else if ($_GET["page"]=="produto"){
+        $nomePagina = "produto";
+    }
+?>
+
+
 <html>
     <head>
         <style>
@@ -30,15 +39,7 @@
         <div>
             <div class="botaoCadastrar">
                 <a href="./cadastrar.php?page=<?php echo $nomePagina?>" class="cadastrar">
-                    <?php
-                        if ($_GET["page"]=="cliente"){
-                            $nomePagina = "cliente";
-                            echo "Cadastrar cliente";
-                        } else if ($_GET["page"]=="produto"){
-                            $nomePagina = "produto";
-                            echo "Cadastrar produto";
-                        }
-                    ?>
+                    <?php echo "Cadastrar ".$nomePagina?>
                 </a>
             </div>
             <div>
@@ -60,8 +61,8 @@
                                     <td><?php echo $array["nome_cliente"];?></td>
                                     <td><?php echo $array["cpf"];?></td>
                                     <td><?php echo $array["email"];?></td>
-                                    <td><a href="./index.php?page=cliente&id=<?php echo $array["id"];?>">🗑</a></td>
-                                    <td><a href="./cadastrar.php?id=<?php echo $array["id"];?>">🖊️</a></td>
+                                    <td><a href="./index.php?<?php echo "page=".$nomePagina."&id=".$array["id"];?>">🗑</a></td>
+                                    <td><a href="./cadastrar.php?<?php echo "page=".$nomePagina."&id=".$array["id"];?>">🖊️</a></td>
                                 </tr>
                     <?php    
                             }
@@ -81,8 +82,8 @@
                                     <td><?php echo $array["cod_barras"];?></td>
                                     <td><?php echo $array["nome_produto"];?></td>
                                     <td><?php echo $array["valor_produto"];?></td>
-                                    <td><a href="./index.php?page=produto&id=<?php echo $array["id"];?>">🗑</a></td>
-                                    <td><a href="./cadastrar.php?id=<?php echo $array["id"];?>">🖊️</a></td>
+                                    <td><a href="./index.php?<?php echo "page=".$nomePagina."&id=".$array["id"];?>">🗑</a></td>
+                                    <td><a href="./cadastrar.php?<?php echo "page=".$nomePagina."&id=".$array["id"];?>">🖊️</a></td>
                                 </tr>
                                 <?php    
                             }

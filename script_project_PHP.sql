@@ -41,15 +41,22 @@ create table pedido (
     foreign key(id_produto) references produto(id),
     quantidade int not null,
     status_pedido enum('Aberto','Pago','Cancelado') not null,
-    data_pedidos datetime default CURRENT_TIMESTAMP
+    data_pedidos datetime default CURRENT_TIMESTAMP,
+    data_delecao datetime
 );
 
 CREATE UNIQUE INDEX pedido_num ON pedido(num_pedido);
 CREATE INDEX pedido_cliente ON pedido(id_cliente);
 CREATE INDEX pedido_produto ON pedido(id_produto);
 
+ALTER TABLE pedido ADD COLUMN data_delecao datetime;
+
 insert into cliente(nome_cliente, cpf, email) values ("Caio",43123435612,"caio@bol.com");
 
-select * from cliente;
+insert into produto(cod_barras ,nome_produto, valor_produto) values (454543543543,"Tenis puma", 250.33);
+
+insert into pedido(id_cliente, id_produto, quantidade, status_pedido) values (4,4,2,"Cancelado");
+
+select * from pedido;
 
 UPDATE cliente SET data_delecao=null WHERE id = 4;
