@@ -32,7 +32,7 @@
             <a class="menuPrincipal" href="/">Home</a>
             <a class="menuPrincipal" href="/index.php?page=cliente">Clientes</a>
             <a class="menuPrincipal" href="/index.php?page=produto">Produtos</a>
-            <a class="menuPrincipal" href="/">Pedidos</a>
+            <a class="menuPrincipal" href="/index.php?page=pedido">Pedidos</a>
         </div>
     </body>
 </html>
@@ -42,11 +42,13 @@
 ?>
     <span>Seja bem vindo à API de pedidos!</span>
 <?php
-    }else if ($_GET["page"]=="cliente"){
+    } else if ($_GET["page"]=="cliente"){
         include "./mysql.php";
         include "./home.php";
     } else if ($_GET["page"]=="produto"){
         include "./mysql.php";
         include "./home.php";
+    } else if ($_GET["page"]=="pedido"){
+        include "./pedido.php";
     }
 ?>

@@ -98,7 +98,7 @@
         </div>
         <form
             action="./index.php<?php
-                if (!empty($_GET)){
+                if (!empty($_GET['id'])){
                     echo "?page=".$_GET['page']."&id=".$_GET['id'];
                 } else {
                     echo "?page=".$_GET['page'];

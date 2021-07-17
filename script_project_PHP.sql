@@ -59,4 +59,10 @@ insert into pedido(id_cliente, id_produto, quantidade, status_pedido) values (4,
 
 select * from pedido;
 
-UPDATE cliente SET data_delecao=null WHERE id = 4;
+UPDATE pedido SET data_delecao=null WHERE num_pedido = 4;
+
+SELECT pedido.num_pedido, cliente.nome_cliente, produto.nome_produto, pedido.quantidade, pedido.status_pedido
+FROM pedido 
+INNER JOIN cliente ON pedido.id_cliente = cliente.id
+INNER JOIN produto ON pedido.id_produto = produto.id
+WHERE pedido.data_delecao IS NULL;
