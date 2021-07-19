@@ -4,6 +4,20 @@
     } else if ($_GET["page"]=="produto"){
         $nomePagina = "produto";
     }
+
+    if (is_null($_GET["order"])){
+        $tipoOrder = 1;
+        $iconOrder = "";
+    } else if ($_GET["order"]=="1"){
+        $tipoOrder = 2;
+        $iconOrder = "⬆";
+    } else if ($_GET["order"]=="2"){
+        $tipoOrder = 0;
+        $iconOrder = "⬇";
+    } else if ($_GET["order"]=="0"){
+        $tipoOrder = 1;
+        $iconOrder = "";
+    }
 ?>
 
 
@@ -48,9 +62,9 @@
                         if ($_GET["page"]=="cliente"){
                     ?>
                         <tr>
-                            <th>Nome</th>
-                            <th>CPF</th>
-                            <th>Email</th>
+                            <th><a href="/index.php?page=cliente&colunm=nome_cliente&order=<?php echo $tipoOrder;?>">Nome <?php if ($_GET["colunm"]=="nome_cliente"){echo $iconOrder;} ?></a></th>
+                            <th><a href="/index.php?page=cliente&colunm=cpf&order=<?php echo $tipoOrder;?>">CPF <?php if ($_GET["colunm"]=="cpf"){echo $iconOrder;} ?></a></th>
+                            <th><a href="/index.php?page=cliente&colunm=email&order=<?php echo $tipoOrder;?>">Email <?php if ($_GET["colunm"]=="email"){echo $iconOrder;} ?></a></th>
                             <th>Excluir</th>
                             <th>Alterar</th>
                         </tr>
@@ -69,9 +83,9 @@
                         } else if ($_GET["page"]=="produto"){
                     ?>
                         <tr>
-                            <th>Código de barras</th>
-                            <th>Nome do produto</th>
-                            <th>Valor do Produto</th>
+                            <th><a href="/index.php?page=produto&colunm=cod_barras&order=<?php echo $tipoOrder;?>">Código de barras <?php if ($_GET["colunm"]=="cod_barras"){echo $iconOrder;} ?></a></th>
+                            <th><a href="/index.php?page=produto&colunm=nome_produto&order=<?php echo $tipoOrder;?>">Nome do produto <?php if ($_GET["colunm"]=="nome_produto"){echo $iconOrder;} ?></a></th>
+                            <th><a href="/index.php?page=produto&colunm=valor_produto&order=<?php echo $tipoOrder;?>">Valor do Produto <?php if ($_GET["colunm"]=="valor_produto"){echo $iconOrder;} ?></a></th>
                             <th>Excluir</th>
                             <th>Alterar</th>
                         </tr>
@@ -85,12 +99,28 @@
                                     <td><a href="./index.php?<?php echo "page=".$nomePagina."&id=".$array["id"];?>">🗑</a></td>
                                     <td><a href="./cadastrar.php?<?php echo "page=".$nomePagina."&id=".$array["id"];?>">🖊️</a></td>
                                 </tr>
-                                <?php    
-                            }
-                        }
-                    ?>
+                            <?php }
+                        }?>
+                        <tr>
+                            <td><a href="/index.php?page=<?php echo $_GET["page"]."&offset=" ?><?php if(!is_null($_GET["colunm"])){echo "&colunm=".$_GET["colunm"]."&order=".$tipoOrder;} ?>">⬅️</a></td>
+                            <td colspan="3">1 - <?php echo $result->rowCount(); ?></td>
+                            <td><a href="/index.php?page=<?php echo $_GET["page"]."&offset=" ?><?php if(!is_null($_GET["colunm"])){echo "&colunm=".$_GET["colunm"]."&order=".$tipoOrder;} ?>">➡️</a></td>
+                        </tr>
                 </table>
             </div>
         </div>
     </body>
+    <script type="text/javascript">
+        function orderColuna(){
+            <?php
+                if ($tipoOrder == 0){
+                    $tipoOrder = 1;
+                } else if ($tipoOrder == 1){
+                    $tipoOrder = 2;
+                } else if ($tipoOrder == 2){
+                    $tipoOrder = 0;
+                }
+            ?>
+        }
+    </script>
 </html>

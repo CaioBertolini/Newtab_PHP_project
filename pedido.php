@@ -1,7 +1,7 @@
 <?php
     include './connectbd.php';
 
-    if (!(empty($_POST) || empty($_GET['id']))){
+    if (!(empty($_POST) || is_null($_GET['id']))){
         $sql_update = "UPDATE pedido SET id_cliente=:id_cliente, id_produto=:id_produto, quantidade=:quantidade, status_pedido=:status_pedido WHERE num_pedido = :id and data_delecao IS NULL;";
         $stmt = $conn->prepare($sql_update);
         $stmt->bindParam(':id_cliente', $_POST["nome_cliente"]);
@@ -17,17 +17,46 @@
         $stmt->bindParam(':quantidade', $_POST["quantidade"]);
         $stmt->bindParam(':status_pedido', $_POST["status_pedido"]);
         $stmt->execute();
-    } else if (!empty($_GET["id"])){
+    } else if (!is_null($_GET["id"])){
         $stmt = $conn->prepare("UPDATE pedido SET data_delecao=NOW() WHERE num_pedido = :id;");
         $stmt->bindParam(':id', $_GET["id"]);
         $stmt->execute();
     }
 
-    $sql = "SELECT pedido.num_pedido, cliente.nome_cliente, produto.nome_produto, pedido.quantidade, pedido.status_pedido
+    if (is_null($_GET["order"])){
+        $tipoOrder = 1;
+        $iconOrder = "";
+        $sql = "SELECT pedido.num_pedido, cliente.nome_cliente, produto.nome_produto, pedido.quantidade, pedido.status_pedido
                 FROM pedido 
                 INNER JOIN cliente ON pedido.id_cliente = cliente.id
                 INNER JOIN produto ON pedido.id_produto = produto.id
                 WHERE pedido.data_delecao IS NULL;";
+    } else if ($_GET["order"]=="1"){
+        $tipoOrder = 2;
+        $iconOrder = "⬆";
+        $sql = "SELECT pedido.num_pedido, cliente.nome_cliente, produto.nome_produto, pedido.quantidade, pedido.status_pedido
+                FROM pedido 
+                INNER JOIN cliente ON pedido.id_cliente = cliente.id
+                INNER JOIN produto ON pedido.id_produto = produto.id
+                WHERE pedido.data_delecao IS NULL ORDER BY ".$_GET["colunm"]." ASC;";
+    } else if ($_GET["order"]=="2"){
+        $tipoOrder = 0;
+        $iconOrder = "⬇";
+        $sql = "SELECT pedido.num_pedido, cliente.nome_cliente, produto.nome_produto, pedido.quantidade, pedido.status_pedido
+                FROM pedido 
+                INNER JOIN cliente ON pedido.id_cliente = cliente.id
+                INNER JOIN produto ON pedido.id_produto = produto.id
+                WHERE pedido.data_delecao IS NULL ORDER BY ".$_GET["colunm"]." DESC;";
+    } else if ($_GET["order"]=="0"){
+        $tipoOrder = 1;
+        $iconOrder = "";
+        $sql = "SELECT pedido.num_pedido, cliente.nome_cliente, produto.nome_produto, pedido.quantidade, pedido.status_pedido
+                FROM pedido 
+                INNER JOIN cliente ON pedido.id_cliente = cliente.id
+                INNER JOIN produto ON pedido.id_produto = produto.id
+                WHERE pedido.data_delecao IS NULL;";
+    }
+
     $result = $conn->query($sql);
 
     $conn=null;
@@ -71,10 +100,10 @@
             <div>
                 <table>
                     <tr>
-                        <th>Cliente</th>
-                        <th>Produto</th>
-                        <th>Quantidade</th>
-                        <th>Status pedido</th>
+                        <th><a href="/index.php?page=pedido&colunm=nome_cliente&order=<?php echo $tipoOrder;?>">Cliente <?php if ($_GET["colunm"]=="nome_cliente"){echo $iconOrder;} ?></a></th>
+                        <th><a href="/index.php?page=pedido&colunm=nome_produto&order=<?php echo $tipoOrder;?>">Produto <?php if ($_GET["colunm"]=="nome_produto"){echo $iconOrder;} ?></a></th>
+                        <th><a href="/index.php?page=pedido&colunm=quantidade&order=<?php echo $tipoOrder;?>">Quantidade <?php if ($_GET["colunm"]=="quantidade"){echo $iconOrder;} ?></a></th>
+                        <th><a href="/index.php?page=pedido&colunm=status_pedido&order=<?php echo $tipoOrder;?>">Status pedido <?php if ($_GET["colunm"]=="status_pedido"){echo $iconOrder;} ?></a></th>
                         <th>Excluir</th>
                         <th>Alterar</th>
                     </tr>

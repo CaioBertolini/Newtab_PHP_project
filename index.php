@@ -37,9 +37,7 @@
     </body>
 </html>
 
-<?php
-    if (empty($_GET)){
-?>
+<?php if (empty($_GET)){ ?>
     <span>Seja bem vindo à API de pedidos!</span>
 <?php
     } else if ($_GET["page"]=="cliente"){

@@ -7,7 +7,7 @@
     $sql = "SELECT id, nome_produto FROM produto WHERE data_delecao IS NULL;";
     $resultProduto = $conn->query($sql);
 
-    if (empty($_GET['id'])){
+    if (is_null($_GET['id'])){
         $botaoCadastro = "Cadastrar";
         $id_cliente = null;
         $id_produto = null;
@@ -19,7 +19,7 @@
     } else{
         $botaoCadastro = "Alterar";
 
-        $stmt = $conn->prepare("SELECT * FROM pedido WHERE num_pedido = :id and data_delecao IS NULL");
+        $stmt = $conn->prepare("SELECT * FROM pedido WHERE num_pedido = :id and data_delecao IS NULL;");
         $stmt->bindParam(':id', $_GET["id"]);
         $stmt->execute();
 
@@ -87,7 +87,7 @@
         </div>
         <form
             action="./index.php<?php
-                if (!empty($_GET['id'])){
+                if (!is_null($_GET['id'])){
                     echo "?page=pedido&id=".$_GET['id'];
                 } else {
                     echo "?page=pedido";

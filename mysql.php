@@ -2,7 +2,7 @@
     include "./connectbd.php";
 
     
-    if (!(empty($_POST) || empty($_GET['id']))){
+    if (!(empty($_POST) || is_null($_GET['id']))){
         if ($_GET["page"]=="cliente"){
             $sql_update = "UPDATE cliente SET nome_cliente=:nome_cliente, cpf=:cpf, email=:email WHERE id = :id and data_delecao IS NULL;";
             $stmt = $conn->prepare($sql_update);
@@ -31,7 +31,7 @@
             $stmt->bindParam(':valor_produto', $_POST["email"]);
         }
         $stmt->execute();
-    } else if (!empty($_GET["id"])){
+    } else if (!is_null($_GET["id"])){
         if ($_GET["page"]=="cliente"){
             $stmt = $conn->prepare("UPDATE cliente SET data_delecao=NOW() WHERE id = :id;");
         } else if($_GET["page"]=="produto"){
@@ -42,10 +42,26 @@
     }
 
     if ($_GET["page"]=="cliente"){
-        $sql = "SELECT * FROM cliente WHERE data_delecao IS NULL";
+        if (is_null($_GET["order"])){
+            $sql = "SELECT * FROM cliente WHERE data_delecao IS NULL LIMIT 20;";
+        } else if ($_GET["order"]==1){
+            $sql = "SELECT * FROM cliente WHERE data_delecao IS NULL LIMIT 20 ORDER BY ".$_GET["colunm"]." ASC ;";
+        } else if ($_GET["order"]==2){
+            $sql = "SELECT * FROM cliente WHERE data_delecao IS NULL LIMIT 20 ORDER BY ".$_GET["colunm"]." DESC;";
+        } else if($_GET["order"]==0){
+            $sql = "SELECT * FROM cliente WHERE data_delecao IS NULL LIMIT 20;";
+        }
         $result = $conn->query($sql);
     } else if ($_GET["page"]=="produto") {
-        $sql = "SELECT * FROM produto WHERE data_delecao IS NULL";
+        if (is_null($_GET["order"])){
+            $sql = "SELECT * FROM produto WHERE data_delecao IS NULL LIMIT 20;";
+        } else if ($_GET["order"]==1){
+            $sql = "SELECT * FROM produto WHERE data_delecao IS NULL LIMIT 20 ORDER BY ".$_GET["colunm"]." ASC;";
+        } else if ($_GET["order"]==2){
+            $sql = "SELECT * FROM produto WHERE data_delecao IS NULL LIMIT 20 ORDER BY ".$_GET["colunm"]." DESC;";
+        } else if($_GET["order"]==0){
+            $sql = "SELECT * FROM produto WHERE data_delecao IS NULL LIMIT 20;";
+        }
         $result = $conn->query($sql);
     }
 
