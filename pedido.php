@@ -58,6 +58,23 @@
     }
 
     $result = $conn->query($sql);
+    $result = $result->fetchAll();
+
+    $maxPagina = count($result)/5;
+    
+    if (empty($_GET["pagina"])){
+        $numPagina = 0;
+    } else if ($_GET["pagina"]=="0" and $numPagina>1){
+        $numPagina = $numPagina - 1;
+    } else if ($_GET["pagina"]=="1" and $numPagina<$maxPagina){
+        $numPagina = $numPagina + 1;
+    }
+    
+    $result2 = array_chunk($result,20)[$numPagina];
+
+    if (empty($result2)){
+        $result2 = array_chunk($result,20)[$numPagina-1];
+    }
 
     $conn=null;
 ?>
@@ -108,7 +125,7 @@
                         <th>Alterar</th>
                     </tr>
                     <?php
-                        foreach ($result as $array){
+                        foreach ($result2 as $array){
                     ?>
                             <tr>
                                 <td><?php echo $array["nome_cliente"];?></td>
@@ -121,6 +138,11 @@
                     <?php    
                         }   
                     ?>
+                    <tr>
+                        <td><a href="/index.php?page=pedido&pagina=0">⬅️</a></td>
+                        <td colspan="4"></td>
+                        <td><a href="/index.php?page=pedido&pagina=1">➡️</a></td>
+                    </tr>
                 </table>
             </div>
         </div>
