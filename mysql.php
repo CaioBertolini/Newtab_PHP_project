@@ -2,7 +2,7 @@
     include "./connectbd.php";
 
     
-    if (!(empty($_POST) || empty($_GET['id']))){
+    if (!(empty($_POST["nome_cliente"]) || empty($_GET['id']))){
         if ($_GET["page"]=="cliente"){
             $sql_update = "UPDATE cliente SET nome_cliente=:nome_cliente, cpf=:cpf, email=:email WHERE id = :id and data_delecao IS NULL;";
             $stmt = $conn->prepare($sql_update);
@@ -18,7 +18,7 @@
         }
         $stmt->bindParam(':id', $_GET["id"]);
         $stmt->execute();
-    } else if (!empty($_POST)){
+    } else if (!empty($_POST["nome_cliente"])){
         if ($_GET["page"]=="cliente"){
             $stmt = $conn->prepare("INSERT INTO cliente(nome_cliente, cpf, email) VALUES (:nome_cliente,:cpf,:email);");
             $stmt->bindParam(':nome_cliente', $_POST["nome_cliente"]);
@@ -51,6 +51,11 @@
         } else if($_GET["order"]==0){
             $sql = "SELECT * FROM cliente WHERE data_delecao IS NULL;";
         }
+        
+        if (!empty($_POST['pesquisaNome'])){
+            $sql = "SELECT * FROM cliente WHERE (".$_POST["colunaNome"]." LIKE '%".$_POST['pesquisaNome']."%' AND data_delecao IS NULL);";
+        }
+
     } else if ($_GET["page"]=="produto") {
         if (empty($_GET["order"])){
             $sql = "SELECT * FROM produto WHERE data_delecao IS NULL;";
@@ -61,7 +66,10 @@
         } else if($_GET["order"]==0){
             $sql = "SELECT * FROM produto WHERE data_delecao IS NULL;";
         }
-        
+
+        if (!empty($_POST['pesquisaNome'])){
+            $sql = "SELECT * FROM produto WHERE (".$_POST["colunaNome"]." LIKE '%".$_POST['pesquisaNome']."%' AND data_delecao IS NULL);";
+        }
     }
 
     $result = $conn->query($sql);

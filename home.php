@@ -103,9 +103,9 @@
                     ?>
                         <tr>
                             <td colspan="5">
-                                <form action="" method="POST">
-                                    <input type="text" name="id" placeholder="Pesquisar">
-                                    <select name="colunaNome" id="colunaNome">
+                                <form action="/index.php?page=cliente" method="POST">
+                                    <input type="text" name="pesquisaNome" placeholder="Pesquisar">
+                                    <select name="colunaNome">
                                         <option value="nome_cliente">Nome</option>
                                         <option value="cpf">CPF</option>
                                         <option value="email">Email</option>
@@ -136,12 +136,12 @@
                         } else if ($_GET["page"]=="produto"){
                     ?>
                         <tr>
-                            <form action="" method="POST">
+                            <form action="/index.php?page=produto" method="POST">
                                 <td colspan="5">
-                                    <input type="text" name="id" placeholder="Pesquisar">
+                                    <input type="text" name="pesquisaNome" placeholder="Pesquisar">
                                     <select name="colunaNome" id="colunaNome">
                                         <option value="cod_barras">Código de Barras</option>
-                                        <option value="nome_produto">Nome</option>
+                                        <option value="nome_produto">Nome Produto</option>
                                         <option value="valor_produto">Valor</option>
                                     </select>
                                     <input type="submit" value="🔍" class="pesquisa">
