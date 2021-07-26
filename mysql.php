@@ -45,7 +45,7 @@
         if (empty($_GET["order"])){
             $sql = "SELECT * FROM cliente WHERE data_delecao IS NULL;";
         } else if ($_GET["order"]==1){
-            $sql = "SELECT * FROM cliente WHERE data_delecao IS NULL ORDER BY ".$_GET["colunm"]." ASC ;";
+            $sql = "SELECT * FROM cliente WHERE data_delecao IS NULL ORDER BY ".$_GET["colunm"]." ASC;";
         } else if ($_GET["order"]==2){
             $sql = "SELECT * FROM cliente WHERE data_delecao IS NULL ORDER BY ".$_GET["colunm"]." DESC;";
         } else if($_GET["order"]==0){

@@ -7,15 +7,21 @@
 
     if (empty($_GET["order"])){
         $tipoOrder = 1;
+    } else if ($_GET["order"]=="1" && empty($_GET["pagina"])){
+        $tipoOrder = 2;
+    } else if ($_GET["order"]=="2" && empty($_GET["pagina"])){
+        $tipoOrder = 0;
+    } else if ($_GET["order"]=="0" && empty($_GET["pagina"])){
+        $tipoOrder = 1;
+    }
+
+    if (empty($_GET["order"])){
         $iconOrder = "";
     } else if ($_GET["order"]=="1"){
-        $tipoOrder = 2;
         $iconOrder = "⬆";
-    } else if ($_GET["order"]=="2"){
-        $tipoOrder = 0;
+    } else if ($_GET["order"]=="2" ){
         $iconOrder = "⬇";
     } else if ($_GET["order"]=="0"){
-        $tipoOrder = 1;
         $iconOrder = "";
     }
     
@@ -97,7 +103,7 @@
                     ?>
                         <tr>
                             <td colspan="5">
-                                <form action="">
+                                <form action="" method="POST">
                                     <input type="text" name="id" placeholder="Pesquisar">
                                     <select name="colunaNome" id="colunaNome">
                                         <option value="nome_cliente">Nome</option>
@@ -162,9 +168,9 @@
                             <?php }
                         }?>
                         <tr>
-                            <td><a href="/index.php?page=<?php echo $_GET["page"]."&pagina=0"; ?>">⬅️</a></td>
+                            <td><a href="/index.php?page=<?php echo $_GET["page"]."&pagina=0"; ?><?php if(!empty($_GET["order"])){echo "&order=".$_GET["order"]."&colunm=".$_GET["colunm"];} ?>">⬅️</a></td>
                             <td colspan="3"></td>
-                            <td><a href="/index.php?page=<?php echo $_GET["page"]."&pagina=1"; ?>">➡️</a></td>
+                            <td><a href="/index.php?page=<?php echo $_GET["page"]."&pagina=1"; ?><?php if(!empty($_GET["order"])){echo "&order=".$_GET["order"]."&colunm=".$_GET["colunm"];} ?>">➡️</a></td>
                         </tr>
                 </table>
             </div>
