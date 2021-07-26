@@ -33,6 +33,7 @@
             <a class="menuPrincipal" href="/index.php?page=cliente">Clientes</a>
             <a class="menuPrincipal" href="/index.php?page=produto">Produtos</a>
             <a class="menuPrincipal" href="/index.php?page=pedido">Pedidos</a>
+            <a class="menuPrincipal" href="/scriptmigracao.php">Migracao</a>
         </div>
     </body>
 </html>

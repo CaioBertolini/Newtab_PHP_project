@@ -2,6 +2,18 @@ create database newtab_PHP_project;
 
 use newtab_PHP_project;
 
+create table tabela_velha(
+	NumeroPedido int not null,
+    NomeCliente varchar(100) not null,
+    CPF char(11) not null,
+    Email varchar(255),
+    DtPedido datetime default CURRENT_TIMESTAMP,
+    CodBarras varchar(20) not null,
+    NomeProduto varchar(100),
+    ValorUnitario float(12,2) not null,
+    Quantidade int not null
+);
+
 create table cliente(
 	id int auto_increment not null,
     primary key(id),
@@ -45,6 +57,8 @@ create table pedido (
     data_delecao datetime
 );
 
+desc tabela_velha;
+
 CREATE UNIQUE INDEX pedido_num ON pedido(num_pedido);
 CREATE INDEX pedido_cliente ON pedido(id_cliente);
 CREATE INDEX pedido_produto ON pedido(id_produto);
@@ -57,12 +71,22 @@ insert into produto(cod_barras ,nome_produto, valor_produto) values (45454354354
 
 insert into pedido(id_cliente, id_produto, quantidade, status_pedido) values (4,4,2,"Cancelado");
 
-select * from pedido;
+insert into tabela_velha(NumeroPedido, NomeCliente, CPF, Email, CodBarras, NomeProduto, ValorUnitario, Quantidade)
+values (15,"Pedro","33423456412","pedro@gmail.com","321321321123","Tenis Nike",123.12,1);
 
-UPDATE pedido SET data_delecao=null WHERE num_pedido = 4;
+select distinct * from tabela_velha;
 
-SELECT pedido.num_pedido, cliente.nome_cliente, produto.nome_produto, pedido.quantidade, pedido.status_pedido
+UPDATE pedido SET data_delecao=null WHERE num_pedido = 5;
+
+DELETE FROM cliente;
+
+SELECT pedido.num_pedido, cliente.nome_cliente, produto.id, pedido.quantidade, pedido.status_pedido
 FROM pedido 
 INNER JOIN cliente ON pedido.id_cliente = cliente.id
 INNER JOIN produto ON pedido.id_produto = produto.id
 WHERE pedido.data_delecao IS NULL;
+
+SELECT tabela_velha.NumeroPedido, cliente.id AS id_cliente, produto.id AS id_produto, tabela_velha.Quantidade
+FROM tabela_velha 
+INNER JOIN cliente ON tabela_velha.NomeCliente = cliente.nome_cliente
+INNER JOIN produto ON tabela_velha.NomeProduto = produto.nome_produto;
